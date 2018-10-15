@@ -111,23 +111,56 @@ namespace Triangle.Compiler.SyntacticAnalyzer
         /// <summary>
         /// Skips a single separator
         /// </summary>
-        private void ScanSeparator()
-        {
+        private void ScanSeparator() {
+            switch ( source.Current ) { 
+                case '!' : source.SkipRestOfLine(); break;
+                default : source.MoveNext(); break;
+            }
         }
 
         /// <summary>
         /// Gets the next token in the file
         /// </summary>
         /// <returns>The type of the next token</returns>
-        private TokenKind ScanToken()
-        {
-            switch (source.Current)
-            {
-                case default(char):
+        private TokenKind ScanToken() {
+            if ( IsOperator( source.Current )) {
+                TakeIt();
+                return TokenKind.Operator;
+            } else if ( char.IsLetter( source.Current ) ) {
+                while ( char.IsLetter( source.Current ) || char.IsDigit( source.Current ) ) 
+                    TakeIt();
+
+                if (ReservedWords.TryGetValue(currentSpelling.ToString(), out TokenKind reservedWordType))
+                    return reservedWordType;
+                
+                return TokenKind.Identifier;
+            } else if ( char.IsDigit( source.Current ) ) {
+                TakeIt();
+                while ( char.IsDigit( source.Current ) ) TakeIt();
+                return TokenKind.IntLiteral;
+            }
+
+            switch ( source.Current ) {
+                case '(' : 
+                    TakeIt();
+                    return TokenKind.LeftBracket;
+                case ')' :
+                    TakeIt();
+                    return TokenKind.RightBracket;
+                case ':' :
+                    TakeIt();
+                    if ( source.Current == '=' ) {
+                        TakeIt();
+                        return TokenKind.Becomes;
+                    }
+                    return TokenKind.Colon ;
+                case ';' :
+                    TakeIt();
+                    return TokenKind.Semicolon;
+                case default( char ) :
                     // We have reached the end of the file
                     return TokenKind.EndOfText;
-
-                default:
+                default :
                     // We encountered something we weren't expecting
                     TakeIt();
                     return TokenKind.Error;
