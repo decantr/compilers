@@ -144,7 +144,7 @@ namespace Triangle.Compiler.SyntacticAnalyzer
                 case '\'' : 
                     do TakeIt(); while ( ! ( source.Current == '\'') ); 
                     TakeIt();
-                    return TokenKind.CharLiteral;
+                    return currentSpelling.Length == 3 ? TokenKind.CharLiteral : TokenKind.Error;
                 case '(' : 
                     TakeIt();
                     return TokenKind.LeftBracket;
