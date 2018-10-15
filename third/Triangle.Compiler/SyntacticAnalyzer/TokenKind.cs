@@ -15,6 +15,9 @@ namespace Triangle.Compiler.SyntacticAnalyzer
         Colon, Semicolon, Becomes, Is, LeftBracket, RightBracket,
 
         // special tokens
-        EndOfText, Error
+        EndOfText, Error,
+
+        // other
+        CharLiteral
     }
 }

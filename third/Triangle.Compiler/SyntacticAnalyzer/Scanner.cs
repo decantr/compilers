@@ -141,6 +141,10 @@ namespace Triangle.Compiler.SyntacticAnalyzer
             }
 
             switch ( source.Current ) {
+                case '\'' : 
+                    do TakeIt(); while ( ! ( source.Current == '\'') ); 
+                    TakeIt();
+                    return TokenKind.CharLiteral;
                 case '(' : 
                     TakeIt();
                     return TokenKind.LeftBracket;
