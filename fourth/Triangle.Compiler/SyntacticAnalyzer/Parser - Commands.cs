@@ -31,7 +31,7 @@ namespace Triangle.Compiler.SyntacticAnalyzer {
 				case TokenKind.Identifier:
 					ParseVname();
 					AcceptIt();
-					// ParseExpression();
+					ParseExpression();
 					if ( tokens.Current.Kind == TokenKind.LeftBracket )
 						AcceptIt();
 		  		else
@@ -44,7 +44,7 @@ namespace Triangle.Compiler.SyntacticAnalyzer {
 					break;
 				case TokenKind.If:
 					AcceptIt();
-					// ParseExpression();
+					ParseExpression();
 					Accept(TokenKind.Then);
 					ParseSingleCommand();
 					Accept(TokenKind.Else);
@@ -52,13 +52,13 @@ namespace Triangle.Compiler.SyntacticAnalyzer {
 					break;
 				case TokenKind.While:
 					AcceptIt();
-					// ParseExpression();
+					ParseExpression();
 					Accept(TokenKind.Do);
 					ParseSingleCommand();
 					break;
 				case TokenKind.Let :
 					AcceptIt();
-					// ParseDeclaration();
+					ParseDeclaration();
 					Accept(TokenKind.In);
 					ParseSingleCommand();
 					break;
