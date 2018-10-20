@@ -6,26 +6,17 @@
  * @Last modified time: 19-Oct-172017
  */
 
+namespace Triangle.Compiler.SyntacticAnalyzer {
+	public partial class Parser {
+		////////////////////////////////////////////////////////////////////////////
+		//
+		// VALUE-OR-VARIABLE NAMES
+		//
+		////////////////////////////////////////////////////////////////////////////
 
-
-namespace Triangle.Compiler.SyntacticAnalyzer
-{
-    public partial class Parser
-    {
-
-        // /////////////////////////////////////////////////////////////////////////////
-        //
-        // VALUE-OR-VARIABLE NAMES
-        //
-        // /////////////////////////////////////////////////////////////////////////////
-
-
-        void ParseVname()
-        {
-          System.Console.WriteLine("parsing variable name");
-            ParseIdentifier();
-
-        }
-
-    }
+		void ParseVname() {
+			System.Console.WriteLine( "parsing variable name" );
+			ParseIdentifier();
+		}
+	}
 }
