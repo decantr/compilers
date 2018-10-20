@@ -35,5 +35,7 @@ namespace Triangle.Compiler.SyntacticAnalyzer {
 					break;
 			}
 		}
+
+		void ParseSecondaryExpression() {}
 	}
 }
