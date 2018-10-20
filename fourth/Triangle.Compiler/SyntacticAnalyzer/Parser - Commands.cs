@@ -30,12 +30,37 @@ namespace Triangle.Compiler.SyntacticAnalyzer {
 			switch ( tokens.Current.Kind ) {
 				case TokenKind.Identifier:
 					ParseVname();
-					//Accept(TokenKind.Becomes);
-					//ParseExpression();
+					AcceptIt();
+					// ParseExpression();
+					if ( tokens.Current.Kind == TokenKind.LeftBracket )
+						AcceptIt();
+		  		else
+						System.Console.WriteLine( "error" );
 					break;
 				case TokenKind.Begin:
 					AcceptIt();
 					ParseCommand();
+					AcceptIt();
+					break;
+				case TokenKind.If:
+					AcceptIt();
+					// ParseExpression();
+					Accept(TokenKind.Then);
+					ParseSingleCommand();
+					Accept(TokenKind.Else);
+					ParseSingleCommand();
+					break;
+				case TokenKind.While:
+					AcceptIt();
+					// ParseExpression();
+					Accept(TokenKind.Do);
+					ParseSingleCommand();
+					break;
+				case TokenKind.Let :
+					AcceptIt();
+					// ParseDeclaration();
+					Accept(TokenKind.In);
+					ParseSingleCommand();
 					break;
 				default:
 					System.Console.WriteLine( "error" );
