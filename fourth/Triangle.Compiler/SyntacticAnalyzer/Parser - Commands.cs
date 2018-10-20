@@ -32,10 +32,8 @@ namespace Triangle.Compiler.SyntacticAnalyzer {
 					ParseVname();
 					AcceptIt();
 					ParseExpression();
-					if ( tokens.Current.Kind == TokenKind.LeftBracket )
+					if ( tokens.Current.Kind == TokenKind.RightBracket )
 						AcceptIt();
-		  		else
-						System.Console.WriteLine( "error" );
 					break;
 				case TokenKind.Begin:
 					AcceptIt();
