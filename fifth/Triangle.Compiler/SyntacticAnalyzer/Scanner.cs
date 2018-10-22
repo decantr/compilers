@@ -107,10 +107,13 @@ namespace Triangle.Compiler.SyntacticAnalyzer {
 		/// <returns>The type of the next token</returns>
 		private TokenKind ScanToken() {
 			if ( IsOperator( source.Current ) ) {
+// operator
 				TakeIt();
 				return TokenKind.Operator;
 			} else if ( char.IsLetter( source.Current ) ) {
-				while ( char.IsLetter( source.Current ) || char.IsDigit( source.Current ) )
+// identifier
+				while ( char.IsLetter( source.Current ) ||
+					char.IsDigit( source.Current ) || source.Current == '_' )
 					TakeIt();
 
 				if ( ReservedWords.TryGetValue( currentSpelling.ToString(), out TokenKind reservedWordType ) )
@@ -118,6 +121,7 @@ namespace Triangle.Compiler.SyntacticAnalyzer {
 
 				return TokenKind.Identifier;
 			} else if (char.IsDigit(source.Current)) {
+// integer
 				TakeIt();
 				while ( char.IsDigit(source.Current )) TakeIt();
 				return TokenKind.IntLiteral;
@@ -125,16 +129,33 @@ namespace Triangle.Compiler.SyntacticAnalyzer {
 
 			switch ( source.Current ) {
 				case '\'':
-					do TakeIt(); while ( ! ( source.Current == '\'' ) );
+// char literal
 					TakeIt();
-					return currentSpelling.Length == 3 ? TokenKind.CharLiteral : TokenKind.Error;
+
+					// attempt to find a 'graphic'
+					if ( char.IsLetter( source.Current ) ||
+								char.IsDigit( source.Current ) ||
+								IsOperator( source.Current ) ||
+								source.Current == '.' ||
+								source.Current == '!' ||
+								source.Current == '?' ||
+								source.Current == '_' ||
+								source.Current == ' ' ) TakeIt();
+					else return TokenKind.Error;
+					if ( source.Current == '\'' ) TakeIt();
+					else return TokenKind.Error;
+
+					return TokenKind.CharLiteral;
 				case '(':
+// left bracket
 					TakeIt();
 					return TokenKind.LeftBracket;
 				case ')':
+// right bracket
 					TakeIt();
 					return TokenKind.RightBracket;
 				case ':':
+// becomes || colon
 					TakeIt();
 					if ( source.Current == '=' ) {
 						TakeIt();
@@ -142,9 +163,11 @@ namespace Triangle.Compiler.SyntacticAnalyzer {
 					}
 					return TokenKind.Colon;
 				case ';':
+// semicolon
 					TakeIt();
 					return TokenKind.Semicolon;
 				case '~':
+// is
 					TakeIt();
 					return TokenKind.Is;
 				case default( char ):
