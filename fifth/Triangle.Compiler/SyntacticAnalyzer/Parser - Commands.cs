@@ -35,30 +35,33 @@ namespace Triangle.Compiler.SyntacticAnalyzer {
 					if ( tokens.Current.Kind == TokenKind.RightBracket )
 						AcceptIt();
 					break;
-				case TokenKind.Begin:
-					AcceptIt();
-					ParseCommand();
-					AcceptIt();
-					break;
 				case TokenKind.If:
 					AcceptIt();
 					ParseExpression();
-					Accept(TokenKind.Then);
+					Accept( TokenKind.Then );
 					ParseSingleCommand();
-					Accept(TokenKind.Else);
+					Accept( TokenKind.Else );
 					ParseSingleCommand();
 					break;
 				case TokenKind.While:
 					AcceptIt();
 					ParseExpression();
-					Accept(TokenKind.Do);
+					Accept( TokenKind.Do );
 					ParseSingleCommand();
 					break;
 				case TokenKind.Let :
 					AcceptIt();
 					ParseDeclaration();
-					Accept(TokenKind.In);
+					Accept( TokenKind.In );
 					ParseSingleCommand();
+					break;
+				case TokenKind.Begin:
+					AcceptIt();
+					ParseCommand();
+					AcceptIt();
+					break;
+				case TokenKind.Skip:
+					AcceptIt();
 					break;
 				default:
 					System.Console.WriteLine( "error" );

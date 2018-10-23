@@ -14,14 +14,18 @@ namespace Triangle.Compiler.SyntacticAnalyzer {
 				case TokenKind.Const:
 					AcceptIt();
 					ParseIdentifier();
-					Accept(TokenKind.Is);
+					Accept( TokenKind.Is );
 					ParseExpression();
 					break;
 				case TokenKind.Var:
 					AcceptIt();
 					ParseIdentifier();
-					Accept(TokenKind.Colon);
+					Accept( TokenKind.Colon );
 					ParseIdentifier();
+					if ( tokens.Current.Kind == TokenKind.Becomes) {
+						AcceptIt();
+						ParseExpression();
+					}
 					break;
 				default:
 					System.Console.WriteLine( "error" );

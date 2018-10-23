@@ -170,6 +170,10 @@ namespace Triangle.Compiler.SyntacticAnalyzer {
 // is
 					TakeIt();
 					return TokenKind.Is;
+				case ',':
+// comma
+					TakeIt();
+					return TokenKind.Comma;
 				case default( char ):
 					// We have reached the end of the file
 					return TokenKind.EndOfText;

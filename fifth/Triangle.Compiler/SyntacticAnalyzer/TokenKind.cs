@@ -18,6 +18,6 @@ namespace Triangle.Compiler.SyntacticAnalyzer
         EndOfText, Error,
 
         // other
-        CharLiteral
+        CharLiteral, Skip, Comma
     }
 }

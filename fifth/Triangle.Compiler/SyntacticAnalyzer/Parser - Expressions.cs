@@ -3,10 +3,12 @@ namespace Triangle.Compiler.SyntacticAnalyzer {
 
 		void ParseExpression() {
 			System.Console.WriteLine( "parsing expression" );
-			ParsePrimaryExpression();
+			ParseSecondaryExpression();
 			while ( tokens.Current.Kind == TokenKind.Operator ) {
 				ParseOperator();
-				ParsePrimaryExpression();
+				ParseExpression();
+				ParseOperator();
+				ParseExpression();
 			}
 		}
 
@@ -15,8 +17,16 @@ namespace Triangle.Compiler.SyntacticAnalyzer {
 				case TokenKind.IntLiteral:
 					ParseIntLiteral();
 					break;
+				case TokenKind.CharLiteral:
+					ParseCharLiteral();
+					break;
 				case TokenKind.Identifier:
 					ParseVname();
+					if ( tokens.Current.Kind == TokenKind.LeftBracket ) {
+						AcceptIt();
+						ParseActualParamater();
+						AcceptIt();
+					}
 					break;
 				case TokenKind.Operator:
 					ParseOperator();
@@ -27,15 +37,18 @@ namespace Triangle.Compiler.SyntacticAnalyzer {
 					ParseExpression();
 					Accept( TokenKind.RightBracket );
 					break;
-				case TokenKind.CharLiteral:
-					ParseCharLiteral();
-					break;
 				default:
-					System.Console.WriteLine( "error - exp" );
+					System.Console.WriteLine( "error" );
 					break;
 			}
 		}
 
-		void ParseSecondaryExpression() {}
+		void ParseSecondaryExpression() {
+			ParsePrimaryExpression();
+			while ( tokens.Current.Kind == TokenKind.Operator ) {
+				ParseOperator();
+				ParsePrimaryExpression();
+			}
+		}
 	}
 }
