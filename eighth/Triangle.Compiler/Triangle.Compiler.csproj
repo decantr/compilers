@@ -44,7 +44,6 @@
     <Compile Remove="SyntaxTrees\Visitors\IRecordAggregateVisitor.cs" />
     <Compile Remove="SyntaxTrees\Visitors\ITypeDenoterVisitor.cs" />
     <Compile Remove="SyntaxTrees\Visitors\IVnameVisitor.cs" />
-    <Compile Remove="SyntaxTrees\Visitors\Void.cs" />
     <Compile Remove="SyntaxTrees\Types\RecordTypeDenoter.cs" />
     <Compile Remove="SyntaxTrees\Declarations\FuncDeclaration.cs" />
     <Compile Remove="SyntaxTrees\Types\ArrayTypeDenoter.cs" />
@@ -52,13 +51,6 @@
     <Compile Remove="SyntaxTrees\Parameters\FuncActualParameter.cs" />
     <Compile Remove="SyntaxTrees\Parameters\ProcActualParameter.cs" />
     <Compile Remove="ContextualAnalyzer\Checker - Aggregates.cs" />
-    <Compile Remove="ContextualAnalyzer\Checker - Commands.cs" />
-    <Compile Remove="ContextualAnalyzer\Checker - Common.cs" />
-    <Compile Remove="ContextualAnalyzer\Checker - Declarations.cs" />
-    <Compile Remove="ContextualAnalyzer\Checker - Expressions.cs" />
-    <Compile Remove="ContextualAnalyzer\Checker - Parameters.cs" />
-    <Compile Remove="ContextualAnalyzer\Checker - Programs.cs" />
-    <Compile Remove="ContextualAnalyzer\Checker - Terminals.cs" />
     <Compile Remove="CodeGenerator\Emitter.cs" />
     <Compile Remove="CodeGenerator\Encoder - Aggregates.cs" />
     <Compile Remove="CodeGenerator\Encoder - Commands.cs" />
