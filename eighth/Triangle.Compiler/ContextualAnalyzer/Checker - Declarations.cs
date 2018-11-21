@@ -4,26 +4,48 @@ using Triangle.Compiler.SyntaxTrees.Visitors;
 
 namespace Triangle.Compiler.ContextualAnalyzer
 {
-    public partial class Checker
-    {
-        public Void VisitConstDeclaration(ConstDeclaration ast, Void arg)
-        {
-            throw new System.NotImplementedException();
-        }
+	public partial class Checker
+	{
+		public Void VisitConstDeclaration(ConstDeclaration ast, Void arg)
+		{
+			ast.Expression.Visit(this, null);
 
-        public Void VisitVarDeclaration(VarDeclaration ast, Void arg)
-        {
-            throw new System.NotImplementedException();
-        }
+			idTable.Enter(ast.Identifier, ast);
 
-        public Void VisitInitDeclaration(InitDeclaration ast, Void arg)
-        {
-            throw new System.NotImplementedException();
-        }
+			CheckAndReportError(!ast.Duplicated, "identifier \"%\" already declared", ast.Identifier, ast);
 
-        public Void VisitSequentialDeclaration(SequentialDeclaration ast, Void arg)
-        {
-            throw new System.NotImplementedException();
-        }
-    }
+			return null;
+		}
+
+		public Void VisitVarDeclaration(VarDeclaration ast, Void arg)
+		{
+			ast.Type.Visit(this, null);
+
+			idTable.Enter(ast.Identifier, ast);
+
+			CheckAndReportError(!ast.Duplicated, "identifier \"%\" already declared", ast.Identifier, ast);
+
+			return null;
+		}
+
+		public Void VisitInitDeclaration(InitDeclaration ast, Void arg)
+		{
+			ast.Expression.Visit(this, null);
+
+			idTable.Enter(ast.Identifier, ast);
+
+			CheckAndReportError(!ast.Duplicated, "identifier \"%\" already declared", ast.Identifier, ast);
+
+			return null;
+		}
+
+		public Void VisitSequentialDeclaration(SequentialDeclaration ast, Void arg)
+		{
+			ast.FirstDeclaration.Visit(this, null);
+			ast.SecondDeclaration.Visit(this, null);
+
+			return null;
+
+		}
+	}
 }
