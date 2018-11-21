@@ -20,10 +20,11 @@ namespace Triangle.Compiler.SyntacticAnalyzer
 		/// <throws type="SyntaxError">
 		/// a syntactic error
 		/// </throws>
-		void ParseIntegerLiteral()
+		IntegerLiteral ParseIntegerLiteral()
 		{
 			Compiler.WriteDebuggingInfo("Parsing Integer Literal");
 			Token token = Accept(TokenKind.IntLiteral);
+			return new IntegerLiteral( token );
 		}
 
 		/**

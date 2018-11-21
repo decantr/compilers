@@ -79,19 +79,19 @@ namespace Triangle.Compiler.SyntacticAnalyzer
 							AcceptIt();
 							Expression expression = ParseExpression();
 							SourcePosition declarationPosition = new SourcePosition(startLocation, tokens.Current.Finish);
-							break;
+							return new InitDeclaration( identifier, typeDenoter , expression , declarationPosition );
 						}
 						else
 						{
 							SourcePosition declarationPosition = new SourcePosition(startLocation, tokens.Current.Finish);
-							break;
+							return new VarDeclaration( identifier , typeDenoter , declarationPosition );
 						}
 					}
 
 				default:
 					{
 						RaiseSyntacticError("\"%\" cannot start a declaration", tokens.Current);
-						break;
+						return null;
 					}
 
 			}
