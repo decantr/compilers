@@ -18,7 +18,11 @@ namespace Triangle.Compiler.SyntacticAnalyzer
 			Compiler.WriteDebuggingInfo("Parsing Parameters");
 			Location startLocation = tokens.Current.Position.Start;
 			Parameter p = ParseParameter();
-			if (tokens.Current.Kind == TokenKind.Comma)
+			if ( tokens.Current.Kind == TokenKind.RightBracket ) {
+				SourcePosition sourcePosition = new SourcePosition(startLocation, tokens.Current.Position.Finish);
+				return new EmptyParameterSequence( sourcePosition );
+			}
+			else if (tokens.Current.Kind == TokenKind.Comma)
 			{
 				AcceptIt();
 				ParameterSequence p2 = ParseParameters();

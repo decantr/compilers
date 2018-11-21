@@ -32,7 +32,7 @@ namespace Triangle.Compiler.SyntacticAnalyzer
 					{
 						Identifier identifier = ParseIdentifier();
 						SourcePosition typePosition = new SourcePosition(startLocation, tokens.Current.Finish);
-						return new TypeDenoter( typePosition );
+						return new SimpleTypeDenoter( identifier, typePosition );
 					}
 
 				default:

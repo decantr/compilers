@@ -1,5 +1,6 @@
 using Triangle.Compiler.SyntacticAnalyzer;
 using Triangle.Compiler.SyntaxTrees;
+using Triangle.Compiler.ContextualAnalyzer;
 
 namespace Triangle.Compiler
 {
@@ -12,7 +13,10 @@ namespace Triangle.Compiler
             if (DEBUG) System.Console.WriteLine(message.ToString());
         }
 
-
+        /// <summary>
+        /// The checker
+        /// </summary>
+        private Checker Checker { get; }
 
         /// <summary>
         /// The error reporter.
@@ -48,6 +52,7 @@ namespace Triangle.Compiler
             Source = new SourceFile(sourceFileName);
             Scanner = new Scanner(Source);
             Parser = new Parser(Scanner, ErrorReporter);
+						Checker = new Checker(errorReporter);
         }
 
         /// <summary>
