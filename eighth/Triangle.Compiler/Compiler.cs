@@ -14,11 +14,6 @@ namespace Triangle.Compiler
         }
 
         /// <summary>
-        /// The checker
-        /// </summary>
-        private Checker Checker { get; }
-
-        /// <summary>
         /// The error reporter.
         /// </summary>
         private ErrorReporter ErrorReporter { get; }
@@ -38,7 +33,10 @@ namespace Triangle.Compiler
         /// </summary>
         private Parser Parser { get; }
 
-
+        /// <summary>
+        /// The checker
+        /// </summary>
+        Checker checker;
 
         /// <summary>
         /// Creates a compiler for the given source file.
@@ -52,7 +50,7 @@ namespace Triangle.Compiler
             Source = new SourceFile(sourceFileName);
             Scanner = new Scanner(Source);
             Parser = new Parser(Scanner, ErrorReporter);
-						Checker = new Checker(errorReporter);
+            checker = new Checker(ErrorReporter);
         }
 
         /// <summary>
@@ -83,10 +81,22 @@ namespace Triangle.Compiler
                 ErrorReporter.ReportMessage("Compilation was unsuccessful.");
                 return false;
             }
+            // 2nd pass
+            ErrorReporter.ReportMessage("Contextual Analysis ...");
+            checker.Check(program);
+            if (ErrorReporter.HasErrors)
+            {
+                ErrorReporter.ReportMessage("Compilation was unsuccessful.");
+                return false;
+            }
+
             System.Console.WriteLine(program);
 
             ErrorReporter.ReportMessage("Compilation was successful.");
             return true;
+
+
+
         }
 
         /// <summary>
